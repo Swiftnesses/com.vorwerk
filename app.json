@@ -1,0 +1,63 @@
+{
+	"id": "com.theswifties.vorwerkvr100",
+	"version": "0.0.1",
+	"compatibility": "0.10.x",
+	"category": "internet",
+	"name": {
+		"en": "Vorwerk VR100 Robotic Vacuum",
+  	    "nl": "Vorwerk VR100 Robotic Vacuum"
+	},
+	"description": {
+		"en": "Interface with the Vorwerk VR100 robotic vacuum using ESP8266 websocket client.",
+   	    "nl": "Interface with the Vorwerk VR100 robotic vacuum using ESP8266 websocket client."
+	},
+	"author": {
+		"name": "Mark Swift",
+		"email": "markaswift@gmail.com"
+	},
+	"images":{
+    "large":"./assets/images/large.png",
+    "small":"./assets/images/small.png"
+   },
+	"flow": {
+		"actions": [{
+			"id": "lametric_notification",
+			"title": {
+				"en": "LaMetric Notification",
+        "nl": "LaMetric notificatie"
+			},
+			"args": [
+			{
+				"name": "nickname",
+				"type": "autocomplete",
+				"placeholder": {
+					"en": "Nickname",
+          			"nl": "Nickname"
+				}
+			},
+			{
+				"name": "text",
+				"type": "text",
+				"placeholder": {
+					"en": "Text",
+          "nl": "Bericht"
+				}
+			},
+			{
+				"name": "icon",
+				"type": "text",
+				"placeholder": {
+					"en": "Icon (3715)"
+				}
+			},
+			{
+				"name": "sound",
+				"type": "autocomplete",
+				"placeholder": {
+					"en": "Sound",
+          			"nl": "Geluid"
+				}
+			}]
+		}]
+	}
+}
