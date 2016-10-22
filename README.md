@@ -1,6 +1,6 @@
-# Vorwerk V100 Robotic Vacuum
+# Vorwerk / Neato robot vacuum interface
 
-This app lets you issue commands to the VR100 vacuum running an ESP8266 web socket interface.
+This app lets you issue commands to the Vorwerk / Neato range of robot vacuum's by using an ESP8266 web socket interface.
 
 What works:
 
