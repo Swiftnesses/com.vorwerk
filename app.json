@@ -1,15 +1,15 @@
 {
-	"id": "com.theswifties.vorwerkvr100",
+	"id": "com.theswifties.vorwerkneato",
 	"version": "0.0.1",
 	"compatibility": "0.10.x",
 	"category": "internet",
 	"name": {
-		"en": "Vorwerk VR100",
-		"nl": "Vorwerk VR100"
+		"en": "Vorwerk / Neato Vacuums",
+		"nl": "Vorwerk / Neato Vacuums"
 	},
 	"description": {
-		"en": "Interface with the Vorwerk VR100 robot vacuum using ESP8266 websocket client.",
-		"nl": "Interface with the Vorwerk VR100 robot vacuum using ESP8266 websocket client."
+		"en": "Interface with the Vorwerk and Neato range of robot vacuums using an ESP8266 websocket client.",
+		"nl": "Interface with the Vorwerk and Neato range of robot vacuums using an ESP8266 websocket client."
 	},
 	"author": {
 		"name": "Mark Swift",
@@ -25,7 +25,16 @@
 			"title": {
 				"en": "Clean House",
 				"nl": "Clean House"
-			}
+			},
+			"args": [
+			{
+				"name": "device",
+				"type": "autocomplete",
+				"placeholder": {
+					"en": "Nickname",
+                    "nl": "Nickname"
+				}
+			}]
 		}]
 	}
 }

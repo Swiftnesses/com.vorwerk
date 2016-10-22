@@ -5,18 +5,18 @@
   <script type="text/javascript" src="/manager/webserver/assets/js/jquery.js"></script>
 </head>
 <body>
-    <h1>Vorwerk V100 Robotic Vacuum</h1>
-
+    <h1>Vorwerk / Neato Robotic Vacuums</h1>
     <fieldset>
-        <legend><span>Add VR100 devices</span></legend>
-        <p><b>Note</b> - Don't forget to give your VR100 vacuum's static IPs.</p>
+        <legend><span>Add connected robot vacuums</span></legend>
+        <p><b>Note</b> - Don't forget to assign your devices a static IP.</p>
+        <p><b>Note</b> - If you change the IP or nickname of any devices below you'll need to update applicable action cards.</p>
         <div class="field row">
             <label style="width: 260px;"><span>Device IP address</span></label>
             <label style="width: 260px;"><span>Device Nickname</span></label>
         </div>
         <div class="field row new_device">
             <input class="device_ip" name="device_ips[]" type="text" value=""/>
-            <input class="device_nickname" name="device_nicknames[]" type="text" value=""/>
+            <input class="device_name" name="device_names[]" type="text" value=""/>
         </div>
         <div class="field row add_device">
             <button id="add" class="left" onclick="addDevice()">Add device</button>
@@ -28,7 +28,7 @@
     <script type="text/javascript">
       function onHomeyReady() {
         // Hide some elements initially.
-        $('#row-auto-discovered').hide()
+        $('.new_device').hide()
 
         // Fill input with already stored settings.
         Homey.get('devices', function (err, devices) {
@@ -36,10 +36,12 @@
             for (var i = 0; i < devices.length; i++) {
               var device = devices[i]
               var newDevice = $(".new_device").clone()
-              newDevice.removeClass("new_device")
+              var delButton = $('<button id="delete" onClick="deleteEntry('+ i +')"><i class="fa fa-trash-o"></i></button>')
+              newDevice.removeClass("new_device").addClass('device_data')
               $(".device_ip", newDevice).val(device.ip)
-              $(".device_nickname", newDevice).val(device.nickname)
-              newDevice.insertBefore(".new_device")
+              $(".device_name", newDevice).val(device.name)
+              newDevice.append(delButton)
+              newDevice.insertBefore(".add_device").show()
             }
           }
           // We're ready!
@@ -47,38 +49,44 @@
         })
       }
 
+      function deleteEntry(num) {
+        $('.device_data')[num].remove()
+      }
+
       function addDevice() {
         var newDevice = $(".new_device").clone()
-        newDevice.removeClass("new_device")
+        var delButton = $('<button id="delete" onClick="deleteEntry('+ $('.device_data').size() +')"><i class="fa fa-trash-o"></i></button>')
+        newDevice.removeClass("new_device").addClass('device_data')
         $(".device_ip", newDevice).val("")
-        $(".device_nickname", newDevice).val("")
-        newDevice.insertBefore(".add_device")
+        $(".device_name", newDevice).val("")
+        newDevice.append(delButton)
+        newDevice.insertBefore(".add_device").show()
         $(".device_ip", newDevice).focus()
       }
 
       function saveSettings() {
         console.log("Saving settings...")
         var devices = []
-        var deviceIPS = $('input[name^=device_ips]').map((idx, elem) => $(elem).val()).get()
-        var deviceNAMES = $('input[name^=device_nicknames]').map((idx, elem) => $(elem).val()).get()
+        var deviceIPs = $('.device_data > input[name^=device_ips]').map((idx, elem) => $(elem).val()).get()
+        var deviceNicknames = $('.device_data > input[name^=device_names]').map((idx, elem) => $(elem).val()).get()
 
-        for (var i = 0; i < deviceNAMES.length; i++) {
-          if (deviceIPS[i].length > 0 && deviceNAMES[i].length > 0) {
-            devices.push({ip: deviceIPS[i], nickname: deviceNAMES[i]})
+        for (var i = 0; i < deviceNicknames.length; i++) {
+          if (deviceIPs[i].length > 0 && deviceNicknames[i].length > 0) {
+            devices.push({ip: deviceIPs[i], name: deviceNicknames[i]})
           } else {
-            setSaveButton("red", "white", __("Settings not saved!"))
+            setSaveButton("red", "white", __("settings.errorIncomplete"))
             return resetSaveButton()
           }
         }
         Homey.set("devices", devices)
-        console.log("Settings saved successfully.")
-        setSaveButton("green", "white", __("Settings saved!"))
+        console.log("Settings saved successfull.")
+        setSaveButton("green", "white", __("settings.saved"))
         resetSaveButton()
       }
 
       function resetSaveButton() {
         setTimeout(function() {
-          setSaveButton("", "black", __("Save settings"))
+          setSaveButton("", "black", __("settings.buttonSave"))
         }, 3000)
       }
 
